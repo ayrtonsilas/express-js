@@ -31,7 +31,7 @@ export default class ProductsController {
     try {
       const product = await ServiceProduct.create(body);
       
-      res.status(200).json(product);
+      res.status(201).json(product);
     } catch (error) {
       if(error instanceof CustomException){
         res.status(error.getStatusCode()).json(error.toResponse());
