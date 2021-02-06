@@ -15,9 +15,9 @@ app.use(cors());
 mongodb();
 
 app.get('/', (req, res) => {
-  res.send('Hello World!s');
+  res.send('Health check');
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Application is running http://localhost:${port}`);
 });
