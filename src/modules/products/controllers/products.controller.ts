@@ -36,8 +36,6 @@ export default class ProductsController {
       if(error instanceof CustomException){
         res.status(error.getStatusCode()).json(error.toResponse());
       }
-    
-
       res.status(500).json(exceptions.internalServer);
     }
   }
