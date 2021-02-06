@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  main:
+    container_name: main
+    build: .
+    volumes:
+      - .:/app/main
+    ports:
+      - 3333:3333
+    env_file:
+      - .env
+    networks:
+      - app-network
+  db:
+    image: 'mongo'
+    container_name: mongodb
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data/db:/data/db
+    networks:
+      - app-network
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    networks:
+      - app-network
+    ports:
+      - 5672:5672
+      - 15672:15672
+  stock-service:
+    image: deliverymuch/backend-challenge:stock-service
+    networks:
+      - app-network
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    restart: on-failure
+networks:
+  app-network:
+    driver: bridge

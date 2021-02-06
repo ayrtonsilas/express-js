@@ -1,0 +1,20 @@
+{
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
+  "include": [
+    "src/**/*"
+  ],
+    "compilerOptions": {
+      "module": "commonjs",
+      "declaration": true,
+      "removeComments": true,
+      "allowSyntheticDefaultImports": true,
+      "target": "es6",
+      "sourceMap": true,
+      "baseUrl": "./",
+      "outDir": "dist",
+      "incremental": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true
+    },
+    "lib": ["es2015"]
+  }
