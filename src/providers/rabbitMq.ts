@@ -55,14 +55,17 @@ export default class RabbitMq {
   ) {
     await this.channel.consume(queue, async (message) => {
       const processed = await callback(message);
- 
+      
       if (processed) {
         console.log(`message: ${message.content.toString()} processed`);
-      } else {
-        await this.publishInQueue('products_fail',message.content.toString());
+        this.channel.ack(message);
+      } else if(await this.publishInQueue('products_fail',message.content.toString())){
+        console.log(`message: ${message.content.toString()} send to queue fail`);
+        this.channel.ack(message);
+      }
+      else{
         console.log(`message: ${message.content.toString()} not processed`);
       }
-      this.channel.ack(message);
     }); 
   }
 }
