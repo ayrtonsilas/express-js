@@ -2,6 +2,7 @@ export const exceptions = {
   product: {
     create: 'Error to save product',
     exists: 'Product already exists',
+    notExists: 'Product not exists',
   },
   order: {
     findName: 'Error to searching order',

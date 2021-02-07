@@ -40,6 +40,45 @@ export default class ServiceProduct {
     }
   }
 
+  static async update(data: IProduct): Promise<boolean> {
+    try {
+      let product = await this.find(data.name);
+      if (!product) {
+        throw new CustomException(exceptions.product.notExists, 400);
+      }
+
+      product.quantity += data.quantity;
+
+      if (!!data.price) {
+        product.price = data.price;
+      }
+      if(product.quantity < 0){
+        throw new CustomException(exceptions.stock.empty, 400);
+      }
+
+      const savedProduct = await product.save();
+
+      if (savedProduct._id) {
+        return true;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async processProductByQueue(data: IProduct): Promise<boolean> {
+    try {
+      const product = await this.find(data.name);
+      if (product) {
+        return await this.update(data);
+      } else {
+        return !!(await this.create(data));
+      }
+    } catch (error) {
+      return false;
+    }
+  }
+
   static async calculateTotal(products: IProduct[]): Promise<number> {
     if (!products.length) {
       return 0;

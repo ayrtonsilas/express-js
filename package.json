@@ -20,9 +20,11 @@
         "typescript": "^3.3.3"
     },
     "dependencies": {
+        "@types/amqplib": "^0.5.17",
         "@types/axios": "^0.14.0",
         "@types/body-parser": "^1.19.0",
         "@types/mongoose": "^5.10.1",
+        "amqplib": "^0.6.0",
         "axios": "^0.21.1",
         "body-parser": "^1.19.0",
         "cors": "^2.8.5",

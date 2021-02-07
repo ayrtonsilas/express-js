@@ -5,8 +5,8 @@ const { Schema } = mongoose;
 const productSchema = new Schema(
   {
     name: { type: String, required: true },
-    price: Number,
-    quantity: Number,
+    price: { type: Number, default: 0 },
+    quantity: { type: Number, default: 0 },
   },
   { versionKey: false },
 );
