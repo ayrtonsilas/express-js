@@ -14,12 +14,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(routes);
 app.use(cors());
-mongodb();
 
-const connQueue = RabbitMq.getSingleton();
-if(connQueue){
-  connQueue.start().then((amqp) => amqp.consume('products', ServiceStock.getProductsQueue));
-}
+mongodb().then(() => {
+  const connQueue = RabbitMq.getSingleton();
+  if (connQueue) {
+    connQueue
+      .startRecursive()
+      .then((amqp) => amqp.consume('products', ServiceStock.getProductsQueue));
+  }
+});
 
 app.get('/', async (req, res) => {
   res.send('Health check');

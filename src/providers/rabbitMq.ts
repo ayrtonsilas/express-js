@@ -20,13 +20,21 @@ export default class RabbitMq {
     return RabbitMq.instance;
   }
 
-  async start(): Promise<RabbitMq> {
-    this.conection = await connect(this.uri);
-    this.channel = await this.conection.createChannel();
-    await this.channel.assertQueue('products');
-    await this.channel.bindQueue('products','stock','incremented');
-    await this.channel.bindQueue('products','stock','decremented');
-    return this;
+  async startRecursive(): Promise<RabbitMq> {
+    try {
+      this.conection = await connect(this.uri);
+      this.channel = await this.conection.createChannel();
+      await this.channel.assertQueue('products_fail');
+      await this.channel.assertQueue('products');
+      await this.channel.assertExchange('stock','direct');
+      await this.channel.bindQueue('products','stock','incremented');
+      await this.channel.bindQueue('products','stock','decremented');
+      return this;
+    } catch (error) {
+      console.log('connecting to queue or recovering access');
+      await (new Promise(resolve => setTimeout(resolve, 1000)));
+      return await this.startRecursive();
+    }
   }
 
   async publishInQueue(queue: string, message: string) {
@@ -47,13 +55,14 @@ export default class RabbitMq {
   ) {
     await this.channel.consume(queue, async (message) => {
       const processed = await callback(message);
-
+ 
       if (processed) {
         console.log(`message: ${message.content.toString()} processed`);
-        this.channel.ack(message);
       } else {
+        await this.publishInQueue('products_fail',message.content.toString());
         console.log(`message: ${message.content.toString()} not processed`);
       }
-    });
+      this.channel.ack(message);
+    }); 
   }
 }

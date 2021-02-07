@@ -11,6 +11,13 @@ services:
       - .env
     networks:
       - app-network
+    links:
+      - rabbitmq
+      - db
+    depends_on:
+      - rabbitmq
+      - db
+    restart: on-failure
   db:
     image: 'mongo'
     container_name: mongodb

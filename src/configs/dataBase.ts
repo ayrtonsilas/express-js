@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-export default function () {
-  mongoose
+export default async function () {
+  await mongoose
     .connect(
       `${process.env.MONGO_HOST}://db:${process.env.MONGO_PORT}/${process.env.MONGO_COLLECT}`,
       {
