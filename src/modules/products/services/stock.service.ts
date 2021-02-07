@@ -11,6 +11,10 @@ export default class ServiceStock {
         name: { $in: products.map(p => p.name) },
       });
 
+      if(productsRetriev.length != products.length){
+        return false;
+      }
+      
       for(const product of productsRetriev){
         if(product.quantity < products.find(p => p.name === product.name).quantity){
           return false;
