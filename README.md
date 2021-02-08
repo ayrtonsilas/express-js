@@ -20,6 +20,19 @@ Instalar as dependências
 $ yarn install
 ```
 
+## Criar o arquivo .env
+
+```
+NODE_ENV=development
+MONGO_HOST=mongodb
+MONGO_PORT=27017
+MONGO_COLLECT=delivery
+RABBIT_HOST=rabbitmq
+RABBIT_USER=guest
+RABBIT_PASSWORD=guest
+RABBIT_PORT=5672
+```
+
 ## Running the app with docker
 Run docker by docker-compose
 ```bash
