@@ -17,7 +17,7 @@
 
 Instalar as dependências
 ```bash
-$ yarn
+$ yarn install
 ```
 
 ## Running the app with docker
