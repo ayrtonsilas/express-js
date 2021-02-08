@@ -30,6 +30,8 @@ $ docker-compose up --build -d
 ```
 http://localhost:3333
 ```
+Esperado:
+`Health check`
 
 ## Popular o banco
 Depois que a aplicação estiver rodando, você pode popular os produtos com o seguinte comando:
