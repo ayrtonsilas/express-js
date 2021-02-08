@@ -33,7 +33,7 @@ RABBIT_PASSWORD=guest
 RABBIT_PORT=5672
 ```
 
-## Running the app with docker
+## Rodar o docker do projeto
 Run docker by docker-compose
 ```bash
 $ docker-compose up --build -d
