@@ -43,6 +43,21 @@ $ yarn seed
 $ yarn test
 ```
 
+```
+ PASS  src/modules/orders/test/order.service.spec.ts (5.004 s)
+  Test order
+    ✓ create order (29 ms)
+    ✓ find order (10 ms)
+
+ PASS  src/modules/products/test/product.service.spec.ts
+  Test product
+    ✓ create product (9 ms)
+    ✓ find product (3 ms)
+
+Test Suites: 2 passed, 2 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+```
 ## Rotas
 ```
 [GET] /products
