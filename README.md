@@ -128,7 +128,7 @@ Body
     "price": 5.6
 }
 ```
-Response: 201
+Response: `201
 ```
 {
     "price": 5.6,
