@@ -33,8 +33,8 @@ RABBIT_PASSWORD=guest
 RABBIT_PORT=5672
 ```
 
-## Executar o docker do projeto
-Run docker by docker-compose
+## Docker
+Executar o docker usando o `docker-compose`
 ```bash
 $ docker-compose up --build -d
 ```
