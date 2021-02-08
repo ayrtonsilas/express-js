@@ -74,10 +74,13 @@ Tests:       4 passed, 4 total
 Snapshots:   0 total
 ```
 ## Rotas
+
+### Produtos
+
 ```
 [GET] /products
 ```
-Response
+Response: `200`
 ```
 {
     "products": [
@@ -102,7 +105,7 @@ Response
 ```
 [GET] /products/:name
 ```
-Response
+Response: `200`
 ```
 {
     "price": 9.84,
@@ -115,9 +118,33 @@ Response
 ------------
 
 ```
+[POST] /products
+```
+Body
+```
+{
+    "name": "ASSG",
+    "quantity": 10,
+    "price": 5.6
+}
+```
+Response: 201
+```
+{
+    "price": 5.6,
+    "quantity": 10,
+    "_id": "6020b96adac558002390bde8",
+    "name": "ASSG"
+}
+```
+
+------------
+
+### Pedidos
+```
 [GET] /orders
 ```
-Response
+Response: `200`
 ```
 {
     "orders": [
@@ -156,7 +183,7 @@ Response
 ------------
 
 ```
-[GET] /orders/:id
+[GET] /orders/:id: `200`
 ```
 Response
 ```
@@ -179,7 +206,7 @@ Response
 ------------
 
 ```
-[POST] /orders
+[POST] /orders: `201`
 ```
 Body
 ```
