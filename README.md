@@ -183,9 +183,9 @@ Response: `200`
 ------------
 
 ```
-[GET] /orders/:id: `200`
+[GET] /orders/:id
 ```
-Response
+Response: `200`
 ```
 {
     "_id": "6020940060b9b60171cd774f",
@@ -206,7 +206,7 @@ Response
 ------------
 
 ```
-[POST] /orders: `201`
+[POST] /orders
 ```
 Body
 ```
@@ -223,7 +223,7 @@ Body
   ]
 }
 ```
-Response
+Response: `201`
 ```
 {
     "_id": "6020af798a8db402004f467e",
