@@ -200,3 +200,11 @@ Response
     "total": 16.6
 }
 ```
+
+## Acesso ao RabbitMQ
+
+```
+http://localhost:15672/
+```
+usuário: `guest`
+senha: `guest`
