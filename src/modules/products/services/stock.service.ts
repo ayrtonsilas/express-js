@@ -3,20 +3,24 @@ import { exceptions } from '../../../messages/exceptions';
 import IProduct from '../interfaces/products.interface';
 import { Message } from 'amqplib';
 import ServiceProduct from './products.service';
+import CustomException from '../../../exceptions/custom.exception';
 
 export default class ServiceStock {
   static async checkStock(products: IProduct[]): Promise<boolean> {
     try {
-      const productsRetriev = await ProductModel.find({
-        name: { $in: products.map(p => p.name) },
-      });
+      const recoveredProducts = await ServiceProduct.findMultiple(
+        products.map((p) => p.name),
+      );
 
-      if(productsRetriev.length != products.length){
+      if (recoveredProducts.length != products.length) {
         return false;
       }
-      
-      for(const product of productsRetriev){
-        if(product.quantity < products.find(p => p.name === product.name).quantity){
+
+      for (const product of recoveredProducts) {
+        if (
+          product.quantity <
+          products.find((p) => p.name === product.name).quantity
+        ) {
           return false;
         }
       }
@@ -26,24 +30,37 @@ export default class ServiceStock {
     }
   }
 
-  static async getProductsQueue(message: Message){
+  static async getProductsQueue(message: Message) {
     try {
-      let product: IProduct = {name: message.content.toString()} as IProduct; 
-  
+      const productName = message.content.toString().replace(/"/g, '');
+      let product: IProduct = await ServiceProduct.find(productName);
+
+      if (!product) {
+        product = {
+          name: productName,
+          quantity: 0,
+          price: 1,
+        } as IProduct;
+      }
+
       switch (message.fields.routingKey) {
         case 'incremented':
-          product.quantity = 1;
+          product.quantity += 1;
           break;
-  
+
         case 'decremented':
-          product.quantity = -1;
+          product.quantity += -1;
           break;
-  
         default:
+          product.quantity += 1;
           break;
       }
-      return await ServiceProduct.processProductByQueue(product);
-      
+
+      if (product.quantity < 0) {
+        throw new CustomException(exceptions.stock.empty, 400);
+      }
+
+      return await ServiceProduct.processProductFromQueue(product);
     } catch (error) {
       return false;
     }

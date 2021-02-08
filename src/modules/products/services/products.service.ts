@@ -21,11 +21,28 @@ export default class ServiceProduct {
     }
   }
 
+  static async findMultiple(names: string[]): Promise<IProduct[]> {
+    try {
+      return await ProductModel.find({
+        name: { $in: names },
+      });
+    } catch (error) {
+      throw new Error(exceptions.internalServer);
+    }
+  }
+
   static async create(data: IProduct): Promise<IProduct> {
     try {
       const findProduct = await this.find(data.name);
       if (findProduct) {
         throw new CustomException(exceptions.product.exists, 400);
+      }
+
+      if (data.quantity < 0) {
+        throw new CustomException(exceptions.product.attributes.quantity, 400);
+      }
+      if (!data.price || data.price < 0) {
+        throw new CustomException(exceptions.product.attributes.price, 400);
       }
 
       const product = new ProductModel(data);
@@ -47,12 +64,15 @@ export default class ServiceProduct {
         throw new CustomException(exceptions.product.notExists, 400);
       }
 
-      product.quantity += data.quantity;
+      if (data.quantity >= 0) {
+        product.quantity = data.quantity;
+      }
 
-      if (!!data.price) {
+      if (!!data.price && data.price > 0) {
         product.price = data.price;
       }
-      if(product.quantity < 0){
+
+      if (product.quantity < 0) {
         throw new CustomException(exceptions.stock.empty, 400);
       }
 
@@ -66,26 +86,16 @@ export default class ServiceProduct {
     }
   }
 
-  static async processProductByQueue(data: IProduct): Promise<boolean> {
+  static async processProductFromQueue(product: IProduct): Promise<boolean> {
     try {
-      const product = await this.find(data.name);
-      if (product) {
-        return await this.update(data);
+      if (product._id) {
+        return await this.update(product);
       } else {
-        return !!(await this.create(data));
+        return !!(await this.create(product));
       }
     } catch (error) {
       return false;
     }
-  }
-
-  static async calculateTotal(products: IProduct[]): Promise<number> {
-    if (!products.length) {
-      return 0;
-    }
-    return await products
-      .map((product: IProduct) => product as any)
-      .reduce((prev: number, current: IProduct) => prev + current.quantity, 0);
   }
 
   static async findById(id: string): Promise<IProduct> {

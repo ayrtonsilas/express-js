@@ -5,6 +5,7 @@ services:
     build: .
     volumes:
       - .:/app/main
+      - ./node_modules:/app/main/node_modules
     ports:
       - 3333:3333
     env_file:

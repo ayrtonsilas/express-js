@@ -9,6 +9,9 @@ const orderItemSchema = new Schema(
   },
   { versionKey: false },
 );
-const OrderItemModel = mongoose.model<IOrderItem>('ordersItems', orderItemSchema);
+const OrderItemModel = mongoose.model<IOrderItem>(
+  'ordersItems',
+  orderItemSchema,
+);
 
 export default OrderItemModel;

@@ -9,7 +9,7 @@ export default class RabbitMq {
 
   constructor(private uri: string) {}
 
-  static getSingleton() {
+  static getConnection() {
     if (RabbitMq.instance) {
       return RabbitMq.instance;
     }

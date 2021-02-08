@@ -4,10 +4,10 @@ import IProduct from '../../products/interfaces/products.interface';
 import IOrderCreate from '../interfaces/orderCreate.interface';
 
 export const mockOrder = (product: IProduct): IOrder => {
-  const { name, quantity } = product;
+  const { name, quantity, price } = product;
   return {
     products: [{ name, quantity }],
-    total: quantity,
+    total: price,
   } as IOrder;
 };
 

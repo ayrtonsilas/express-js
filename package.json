@@ -6,7 +6,8 @@
     "scripts": {
         "start:prod": "tsc --build && node dist/index",
         "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-        "test": "jest --runInBand --verbose ./test"
+        "test": "jest --runInBand --verbose ./test",
+        "seed": "node seed/populate.js"
     },
     "author": "",
     "license": "ISC",
@@ -24,8 +25,7 @@
         "prettier": "^2.2.1",
         "ts-jest": "^26.5.0",
         "ts-node-dev": "^1.1.1",
-        "tslint": "^5.12.1",
-        "typescript": "^3.3.3"
+        "tslint": "^5.12.1"
     },
     "dependencies": {
         "@types/amqplib": "^0.5.17",
@@ -38,7 +38,8 @@
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "express": "^4.16.4",
-        "mongoose": "^5.10.1"
+        "mongoose": "^5.10.1",
+        "typescript": "^3.3.3"
     },
     "jest": {
         "moduleFileExtensions": [

@@ -16,7 +16,7 @@ app.use(routes);
 app.use(cors());
 
 mongodb().then(() => {
-  const connQueue = RabbitMq.getSingleton();
+  const connQueue = RabbitMq.getConnection();
   if (connQueue) {
     connQueue
       .startRecursive()

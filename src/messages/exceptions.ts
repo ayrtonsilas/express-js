@@ -3,6 +3,10 @@ export const exceptions = {
     create: 'Error to save product',
     exists: 'Product already exists',
     notExists: 'Product not exists',
+    attributes: {
+      price: 'price is required',
+      quantity: 'quantity is required'
+    }
   },
   order: {
     findName: 'Error to searching order',

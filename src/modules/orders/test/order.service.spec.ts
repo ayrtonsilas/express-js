@@ -11,7 +11,7 @@ import { mockOrder, mockOrderCreate } from '../mocks/order.mock';
 import IOrder from '../interfaces/orders.interface';
 import IOrderCreate from '../interfaces/orderCreate.interface';
 
-describe('Test product', () => {
+describe('Test order', () => {
   let createdProduct: string = '';
   let product: IProduct = null; 
   let orderParams: IOrderCreate = null;

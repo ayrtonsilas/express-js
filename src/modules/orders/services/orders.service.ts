@@ -38,7 +38,7 @@ export default class ServiceOrder {
         throw new CustomException(exceptions.stock.empty, 400);
       }
 
-      const total = await ServiceProduct.calculateTotal(data.products);
+      const total = await this.calculateTotal(data.products);
       const order = new OrderModel({
         total,
       });
@@ -84,5 +84,19 @@ export default class ServiceOrder {
     const { _id, total } = order;
     const products = await ServiceOrderItem.formatItems(order.items);
     return { _id, products, total: total } as IOrder;
+  }
+
+  static async calculateTotal(products: IProduct[]): Promise<number> {
+    if (!products.length) {
+      return 0;
+    }
+
+    const recoveredProducts = await ServiceProduct.findMultiple(
+      products.map((p) => p.name),
+    );
+
+    return await recoveredProducts
+      .map((product: IProduct) => product as any)
+      .reduce((prev: number, current: IProduct) => prev + current.price, 0);
   }
 }

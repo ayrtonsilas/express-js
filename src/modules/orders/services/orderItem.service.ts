@@ -14,10 +14,14 @@ export default class ServiceOrderItem {
         productId: data.productId,
       });
 
-      const savedOrderItme = await orderItem.save();
+      const savedOrderItem = await orderItem.save();
 
-      if (savedOrderItme._id) {
-        return savedOrderItme;
+      if (savedOrderItem._id) {
+        let product = await ServiceProduct.findById(data.productId);
+        product.quantity -= savedOrderItem.quantity;
+        await ServiceProduct.update(product);
+
+        return savedOrderItem;
       }
       throw new CustomException(exceptions.order.item.create, 400);
     } catch (error) {
