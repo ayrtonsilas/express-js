@@ -51,6 +51,8 @@ Depois que a aplicação estiver rodando, você pode popular os produtos com o s
 ```bash
 $ yarn seed
 ```
+## Estrutura do banco
+<img src="https://github.com/ayrtonsilas/system-orders/blob/master/docs/pedidos.png?raw=true" alt="Sanar Saude" />
 
 ## Testes
 
