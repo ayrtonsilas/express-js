@@ -6,23 +6,15 @@ import routes from './routes/routes';
 import mongodb from './configs/dataBase';
 import RabbitMq from './providers/rabbitMq';
 import ServiceStock from './modules/products/services/stock.service';
+mongodb();
+
 const app = express();
 const port = 3333;
-
 dotenv.config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(routes);
 app.use(cors());
-
-mongodb().then(() => {
-  const connQueue = RabbitMq.getConnection();
-  if (connQueue) {
-    connQueue
-      .startRecursive()
-      .then((amqp) => amqp.consume('products', ServiceStock.getProductsQueue));
-  }
-});
 
 app.get('/', async (req, res) => {
   res.send('Health check');
@@ -31,3 +23,6 @@ app.get('/', async (req, res) => {
 app.listen(port, () => {
   console.log(`Application is running http://localhost:${port}`);
 });
+
+RabbitMq.getConnection().startRecursive()
+      .then((amqp) => amqp.consume('products', ServiceStock.getProductsQueue));

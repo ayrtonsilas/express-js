@@ -31,7 +31,6 @@ export default class RabbitMq {
       await this.channel.bindQueue('products','stock','decremented');
       return this;
     } catch (error) {
-      console.log('connecting to queue or recovering access');
       await (new Promise(resolve => setTimeout(resolve, 1000)));
       return await this.startRecursive();
     }
