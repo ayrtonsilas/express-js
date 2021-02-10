@@ -33,8 +33,8 @@ RABBIT_PASSWORD=guest
 RABBIT_PORT=5672
 ```
 
-## Running the app with docker
-Run docker by docker-compose
+## Docker
+Executar o docker usando o `docker-compose`
 ```bash
 $ docker-compose up --build -d
 ```
@@ -51,6 +51,8 @@ Depois que a aplicação estiver rodando, você pode popular os produtos com o s
 ```bash
 $ yarn seed
 ```
+## Estrutura do banco
+<img src="https://github.com/ayrtonsilas/system-orders/blob/master/docs/pedidos.png?raw=true" alt="Sanar Saude" />
 
 ## Testes
 
